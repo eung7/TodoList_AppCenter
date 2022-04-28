@@ -23,7 +23,7 @@ enum Section: String, CaseIterable {
 
 class TodoListViewModel {
     
-    static var lastID: Int = 0
+    var lastID: Int = 0
     
     var todos: [Todo] = []
     
@@ -36,8 +36,8 @@ class TodoListViewModel {
     }
     
     func createTodo(contents: String, isToday: Bool) -> Todo {
-        let nextId = TodoManager.lastID + 1
-        TodoManager.lastID = nextId
+        let nextId = lastID + 1
+        lastID = nextId
         
         return Todo(id: nextId, contents: contents, isToday: isToday, isDone: false)
     }
