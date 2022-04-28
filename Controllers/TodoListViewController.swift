@@ -98,14 +98,14 @@ class TodoListViewController: UIViewController {
         
         textField.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(16)
+            $0.trailing.equalTo(todayButton.snp.leading).offset(-16)
             $0.height.equalTo(30)
-            $0.width.equalTo(260)
             $0.centerY.equalToSuperview()
         }
         
         todayButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalTo(textField.snp.trailing).offset(10)
+            $0.trailing.equalTo(addButton.snp.trailing).offset(-30)
         }
         
         addButton.snp.makeConstraints {
