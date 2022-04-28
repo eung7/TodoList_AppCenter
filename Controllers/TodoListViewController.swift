@@ -80,7 +80,7 @@ class TodoListViewController: UIViewController {
         
         print("Hi")
         
-        TodoManager.shared.loadTodo()
+        viewModel.loadTodo()
         addKeyboardNotificationCenter()
         setupViews()
     }
@@ -147,15 +147,15 @@ extension TodoListViewController: UITextFieldDelegate {
 extension TodoListViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return Section.allCases.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return TodoManager.shared.todayTodos.count
+            return viewModel.todayTodos.count
         case 1:
-            return TodoManager.shared.upcomingTodos.count
+            return viewModel.upcomingTodos.count
         default:
             return 0
         }
@@ -164,14 +164,15 @@ extension TodoListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TodoListCell.identifier, for: indexPath) as? TodoListCell else { return UITableViewCell() }
         cell.delegate = self
+        
         switch indexPath.section {
         case 0:
-            cell.setupData(TodoManager.shared.todayTodos[indexPath.row])
-            cell.todo = TodoManager.shared.todayTodos[indexPath.row]
+            cell.setupData(viewModel.todayTodos[indexPath.row])
+            cell.todo = viewModel.todayTodos[indexPath.row]
             return cell
         case 1:
-            cell.setupData(TodoManager.shared.upcomingTodos[indexPath.row])
-            cell.todo = TodoManager.shared.upcomingTodos[indexPath.row]
+            cell.setupData(viewModel.upcomingTodos[indexPath.row])
+            cell.todo = viewModel.upcomingTodos[indexPath.row]
             return cell
         default:
             return cell
@@ -191,12 +192,12 @@ extension TodoListViewController: UITableViewDelegate {
 
 extension TodoListViewController: TodoListDelegate {
     func didTapDeleteButton(todo: Todo) {
-        TodoManager.shared.deleteTodo(todo)
+        viewModel.deleteTodo(todo)
         tableView.reloadData()
     }
     
     func didTapDoneButton(todo: Todo) {
-        TodoManager.shared.updateTodo(todo)
+        viewModel.updateTodo(todo)
         tableView.reloadData()
     }
 }
@@ -211,13 +212,14 @@ private extension TodoListViewController {
             todayButton.backgroundColor = nil
         }
     }
-    
+
     @objc func didTapAddButton() {
         guard textField.text != "",
               textField.textColor != UIColor.systemGray3,
               let contents = textField.text else { return }
-        let todo = TodoManager.shared.createTodo(contents: contents, isToday: todayButton.isSelected)
-        TodoManager.shared.addTodo(todo)
+        
+        let todo = viewModel.createTodo(contents: contents, isToday: todayButton.isSelected)
+        viewModel.addTodo(todo)
         
         textField.text = ""
         todayButton.isSelected = false
@@ -225,7 +227,7 @@ private extension TodoListViewController {
         todayButton.tintColor = .systemGray2
         tableView.reloadData()
     }
-    
+
     @objc func didTapBackGround() {
         view.endEditing(true)
     }

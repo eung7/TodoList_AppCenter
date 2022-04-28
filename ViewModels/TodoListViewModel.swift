@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Section: String {
+enum Section: String, CaseIterable {
     case today
     case upcoming
     
@@ -26,6 +26,14 @@ class TodoListViewModel {
     static var lastID: Int = 0
     
     var todos: [Todo] = []
+    
+    var todayTodos: [Todo] {
+        return todos.filter { $0.isToday == true }
+    }
+    
+    var upcomingTodos: [Todo] {
+        return todos.filter { $0.isToday == false }
+    }
     
     func createTodo(contents: String, isToday: Bool) -> Todo {
         let nextId = TodoManager.lastID + 1
