@@ -14,7 +14,7 @@ class UpcomingTableHeaderView: UITableViewHeaderFooterView {
     
     private lazy var label: UILabel = {
         let label = UILabel()
-        label.text = "Upcoming 🚀"
+        label.text = Section.upcoming.headerTitle
         label.font = .systemFont(ofSize: 24.0, weight: .heavy)
         
         return label
