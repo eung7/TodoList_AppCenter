@@ -14,7 +14,7 @@ class TodayTableHeaderView: UITableViewHeaderFooterView {
     
     var label: UILabel = {
         let label = UILabel()
-        label.text = "Today 🚀"
+        label.text = Section.today.headerTitle
         label.font = .systemFont(ofSize: 24.0, weight: .heavy)
         
         return label

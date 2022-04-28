@@ -21,4 +21,3 @@ struct Todo: Codable, Equatable {
         return lhs.id == rhs.id
     }
 }
-

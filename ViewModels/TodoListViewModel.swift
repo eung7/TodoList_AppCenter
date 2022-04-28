@@ -7,12 +7,25 @@
 
 import Foundation
 
+enum Section: String {
+    case today
+    case upcoming
+    
+    var headerTitle : String {
+        switch self {
+        case .today:
+            return "Today 🚀"
+        case .upcoming:
+            return "Upcoming 🚀"
+        }
+    }
+}
+
 class TodoListViewModel {
     
     static var lastID: Int = 0
     
     var todos: [Todo] = []
-
     
     func createTodo(contents: String, isToday: Bool) -> Todo {
         let nextId = TodoManager.lastID + 1

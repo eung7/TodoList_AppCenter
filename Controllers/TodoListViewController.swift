@@ -78,6 +78,8 @@ class TodoListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("Hi")
+        
         TodoManager.shared.loadTodo()
         addKeyboardNotificationCenter()
         setupViews()
@@ -149,7 +151,6 @@ extension TodoListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         switch section {
         case 0:
             return TodoManager.shared.todayTodos.count
